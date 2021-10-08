@@ -30,6 +30,7 @@ export function get_participe(id_joueur, callback){
     function(err, participation, field){
         if(err) throw err; 
         get_year(participation,function(participation_annee){
+            if(err) throw err;
             return callback(participation_annee)
         });
     })
@@ -53,7 +54,7 @@ export function get_nb_win(id_joueur, callback){
   */
 export function get_meilleur_tour(id_joueur, callback){
     con.query(`SELECT tour, idedition from score WHERE VAINQ = ${id_joueur}`, function(err, result, field){
-       console.log(result)
+        if (err) throw err;
         return callback(result)
        
     })
@@ -66,7 +67,7 @@ export function get_meilleur_tour(id_joueur, callback){
 export function get_pire_tour(id_joueur, callback){
     con.query(`SELECT tour, idedition from score WHERE IDJ1 = ${id_joueur} AND VAINQ != ${id_joueur}
     OR IDJ2 = ${id_joueur} AND VAINQ !=${id_joueur}`, function(err, result, field){
-       console.log(result)
+        if(err) throw err;
        return callback(result)
     })
 }
@@ -82,6 +83,7 @@ export function get_scores_filter(id_joueur, scores, callback){
         if (v.IDJ1 === id_joueur){ 
             sql = `SELECT NOM,PRENOM,NAT,IDJOUEUR from joueur WHERE IDJOUEUR=${v.IDJ2}`;
             con.query(sql, function(err,res){
+                if (err) throw err;
                 v.nat_IDJ1=res[0].NAT;
                 v.prenom_IDJ1=res[0].PRENOM;
                 v.nom_IDJ1=res[0].NOM;

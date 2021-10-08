@@ -9,22 +9,25 @@ import bullRoutes from './routes/routes_searchBull.js';
 import helmet from 'helmet';
 import dotenv from 'dotenv';
 import mysql from 'mysql'; 
+import { monitorEventLoopDelay } from 'perf_hooks';
 
-// import limiter from "limiter";
-// const dotenv = require('dotenv');
-// require('dotenv').config();
-// const connection = con.connect((err) => {
-//     if(err) throw err
-//     console.log("connected")
-// })
+
 dotenv.config();
 
+
+
 var connection;
+// connection = mysql.createConnection({
+//   database:'mlp',
+//   host:'localhost',
+//   user:'root',
+//   password:''
+// })
 function handleDisconnect() {
     connection = mysql.createConnection({
-        pool: true,
-        connectionLimit: 5,
-        waitForConnections: true,
+        // pool: true,
+        // connectionLimit: 5,
+        // waitForConnections: true,
         database:process.env.DATABASE,
         host : process.env.HOST,
         user :  process.env.USER, 
@@ -76,8 +79,7 @@ app.use('/', playersRoutes);
 app.use('/', yearRoutes);
 app.use('/', crossRoutes);
 app.use('/', bullRoutes);
-console.log(PORT);
-app.listen(process.env.PORT, () => console.log(`server running on https://www.api-rgstats.jonathan-robin.com:${PORT}`));
+app.listen(process.env.PORT, () => console.log(`server running on https://www.api-rgstats.jonathan-robin.com:}`));
 
 // con.query('select * from score', function(err,res,field){
 //     console.log(res)
