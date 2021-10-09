@@ -63,7 +63,6 @@ router.post('/bull', (req, res) =>{
     else{
       get_bullier_id(matchs_lost, bull_id, id_joueur, function(bull_id){
         id = bull_id
-        console.log
         // On récupère les infos du joueur passé dans le body 
         get_info_joueur(id, function(infos){ 
           var joueur = infos;

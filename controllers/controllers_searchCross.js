@@ -1,4 +1,5 @@
 import {con} from '../config/database.js';
+import { connection } from '../index.js';
 
 export function get_intermediate_filter(id_joueur, tour, year, callback){ 
 
@@ -28,7 +29,7 @@ export function get_intermediate_filter(id_joueur, tour, year, callback){
 }
 
 export function get_filter(sql, callback){
-    con.query(sql, function(err, res, field){
+    connection.query(sql, function(err, res, field){
         if (err) throw err; 
         return callback(res);
    })
@@ -36,7 +37,7 @@ export function get_filter(sql, callback){
 
 //Renvoi une liste de match filtrée par année 
 export function filter_year(id_joueur, year, callback){ 
-    con.query(`SELECT IDEDITION from edition WHERE ANNEE = ${year}`, function(err, res, field){ 
+    connection.query(`SELECT IDEDITION from edition WHERE ANNEE = ${year}`, function(err, res, field){ 
         if (err) throw err;
         return callback(res)
     })

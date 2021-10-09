@@ -9,12 +9,14 @@ router.post('/cross', (req, res) =>{
     var tour = req.body.tour;
     var year = req.body.year;
     var id_joueur = req.body.id_joueur
+
+    var players = req.body.players;
     
     if(year != null && year != undefined && year != 'unselected' && year != 0){ 
         filter_year(id_joueur, year, function(resu){ 
             get_intermediate_filter(id_joueur, tour, resu[0].IDEDITION, function(result){ 
-                get_infoJ1(result, function(result){
-                    get_infoJ2(result, function(result){
+                get_infoJ1(result, players, function(result){
+                    get_infoJ2(result, players, function(result){
                         res.send(result)
                     })
                 })
@@ -23,8 +25,8 @@ router.post('/cross', (req, res) =>{
     }
     else{
         get_intermediate_filter(id_joueur, tour, null, function(result){ 
-            get_infoJ1(result, function(result){
-                get_infoJ2(result, function(result){
+            get_infoJ1(result, players, function(result){
+                get_infoJ2(result, players, function(result){
                     res.send(result)
                 })
             })

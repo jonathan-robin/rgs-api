@@ -14,14 +14,16 @@ router.post('/year', async (req, res) => {
     let draw = {tour1:[], tour2:[], tour3:[], tour4:[], tour5:[], tour6:[], tour7:[]};
     var match = '';
     var name = '';
+    // On reçoit un array des joueurs pour effectuer moins de query
+    var players = req.body.players
 
     get_idEdition(req.body.year, function(edition){
         var sql = `SELECT * FROM score WHERE IDEDITION = ${edition[0][0].IDEDITION}`;
         get_scores(sql, function(result){
             match = result;
-            get_infoJ1(match, function(result){
+            get_infoJ1(match, players, function(result){
                 name = result;
-                get_infoJ2(name, function(result){
+                get_infoJ2(name, players, function(result){
                     result.map(element => { 
                         switch (element.Tour){ 
                             case 7 : draw.tour7.push(element); break;  

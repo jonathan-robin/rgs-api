@@ -3,12 +3,13 @@ import {con} from '../config/database.js';
 import {get_scores, get_loose} from '../utils/utils.js';
 import {get_participe, get_nb_win, get_meilleur_tour, get_pire_tour, get_scores_filter} from '../controllers/controllers_searchPlayers.js';
 import { get_infoJ1, get_infoJ2} from '../controllers/controllers_searchYear.js';
+import { connection } from '../index.js';
 
 const router = express.Router();
 
 //Renvoi un tableau avec les infos des joueurs pour les options input
 router.get('/players', (req, res) =>{
-    con.query('SELECT * FROM joueur', function(err, result, field){
+    connection.query('SELECT * FROM joueur', function(err, result, field){
         if (err) throw err; 
         res.send(result)
     })
@@ -28,6 +29,8 @@ router.post('/players', (req, res) => {
     var nom_joueur = req.body.nom;
     var prenom_joueur = req.body.prenom;
     var nat_joueur = req.body.nat;
+
+    var players = req.body.players
 
     var participation = [];
     let premiere_participation = 2021;
@@ -76,9 +79,9 @@ router.post('/players', (req, res) => {
 
         var sql = `SELECT * FROM score WHERE IDJ1 = ${id_joueur} OR IDJ2 = ${id_joueur}`;
         get_scores(sql, function(result){
-            get_infoJ1(result, function(result){
-                get_infoJ2(result, function(result){
-                    get_scores_filter(id_joueur, result, function(result){
+            get_infoJ1(result, players, function(result){
+                get_infoJ2(result, players, function(result){
+                    get_scores_filter(id_joueur, result, players, function(result){
                         res.send({
                             id_joueur,
                             nom_joueur,
