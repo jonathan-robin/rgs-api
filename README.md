@@ -8,11 +8,11 @@ The website allows you to search between 4 filters ;
 - Pet peeve
 
 Link to the [live version](https://api-rgstats.jonathan-robin.com).\
-Link to the [server-side](https://github.com/jonathan-robin/rgs-client.git).
+Link to the [client-side](https://github.com/jonathan-robin/rgs-client.git).
 
 ### Built with 
 
-[Node.js](https://fr.nodejs.org/)\
+[Node.js](https://fr.nodejs.org/)
 
 ## Getting started
 ### Prerequisities & installation
@@ -33,6 +33,12 @@ To run the app locally, run
 ```
 node index.js
 ```
+## Usage
+The server won't connect to the db since the .env variables aren't included. Change the variables
+```
+mysql.createConnection({ database, host, username, pass})
+```
+in the ```config/database.js``` file with your own and then feel free to contact me to get a copy of the db to run locally.
 
 ## Contributing
 
